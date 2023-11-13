@@ -43,7 +43,7 @@ Before you begin working with this project, make sure you have the following:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/django-delights-inventory.git
+   git clone https://github.com/yourusername/django-delights-inventory.git](https://github.com/GuillermoZarate/Restaurant-Inventory-Management.git
 
 ## Recursos Adicionales
 - [Enlace al curso de CodeAcademy](https://www.codecademy.com/enrolled/paths/build-python-web-apps-with-django)
