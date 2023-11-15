@@ -7,4 +7,4 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def home(request):
-    return render(request, 'main/base.html')
+    return render(request, 'main/home.html')
