@@ -1,0 +1,32 @@
+<!-- base.html en la carpeta templates/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'main/login.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <!-- Puedes incluir aquí elementos de navegación comunes -->
+    </header>
+
+    <main>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+    <footer>
+        <!-- Puedes incluir aquí elementos de pie de página comunes -->
+    </footer>
+</body>
+</html>
+
+
+

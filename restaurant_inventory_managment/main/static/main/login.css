@@ -1,5 +1,8 @@
 body {
 	font-family: Arial;
+	margin: 0;
+	padding: 0;
+	background-color: rgb(255, 0, 0);
 }
 
 .login-form {
@@ -7,6 +10,7 @@ body {
 	width: 420px;
 	flex-direction: column;
 	margin: auto;
+	border: 1px solid black;
 }
 
 input[type=submit]{
