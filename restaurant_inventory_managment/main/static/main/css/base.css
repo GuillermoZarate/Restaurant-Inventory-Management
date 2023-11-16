@@ -1,0 +1,85 @@
+
+
+.main-section{
+	margin-left: 15rem;
+}
+
+/* ESTILO DE LA SIDEBAR */
+/* Sidebar fina 'fixed' a la izquierda */
+.sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 10rem;
+	padding: 1rem 1rem;
+	z-index: 1050;
+	transition: width 0.1s ease-in-out;
+	background-color: #1C2C50
+}
+
+/* Estilo para los enlaces dentro de la barra lateral */
+.sidebar a {
+	background-color: #87CEFA; /* Fondo azul claro */
+    padding: 15px; /* Espaciado interno de la barra lateral */
+    border-radius: 15px; /* Bordes redondeados */
+    display: flex; /* Utiliza el modelo de caja flexible */
+    text-decoration: none; /* Quita el subrayado del texto del enlace */
+    color: white; /* Color del texto en blanco */
+    margin-bottom: 10px; /* Espaciado entre los enlaces */
+    align-items: center; /* Centra verticalmente el contenido del enlace */
+    padding: 10px; /* Añade un poco de espacio alrededor del enlace */
+    border-radius: 8px; /* Bordes redondeados para cada enlace */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+}
+
+/* Estilo para el texto dentro de los enlaces */
+.sidebar a span {
+    display: inline-block;
+    margin-left: 10px; /* Ajusta el espacio entre el icono y el texto */
+}
+
+/* Estilo para el botón de cierre de sesión */
+.sidebar .logout-button {
+    background-color: #d9534f; /* Color de fondo para resaltar el botón de cierre de sesión */
+    padding: 10px; /* Espaciado interno del botón de cierre de sesión */
+    color: white; /* Color del texto en blanco */
+}
+
+/* Estilo para el enlace cuando es pulsado */
+.sidebar a:active{
+    background-color: #FFA500; /* Color naranja cuando el enlace es pulsado */
+}
+
+/* Estilo para los enlaces dentro de la barra lateral */
+.sidebar a {
+    display: block; /* Hace que los enlaces ocupen toda la anchura disponible */
+    text-decoration: none; /* Quita el subrayado del texto del enlace */
+    color: white; /* Color del texto en blanco */
+    margin-bottom: 10px; /* Espaciado entre los enlaces */
+}
+
+/* Estilo para el botón de cierre de sesión */
+.sidebar .logout-button {
+    background-color: #d9534f; /* Color de fondo para resaltar el botón de cierre de sesión */
+    padding: 10px; /* Espaciado interno del botón de cierre de sesión */
+    color: white; /* Color del texto en blanco */
+}
+
+/* Estilo para la barra lateral en pantallas pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+    .sidebar {
+		width: 2rem;
+    }
+
+	.sidebar a span {
+        display: none; /* Oculta el texto en pantallas pequeñas */
+    }
+
+    .sidebar a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 5px; /* Ajusta el espaciado entre los enlaces */
+    }
+}
