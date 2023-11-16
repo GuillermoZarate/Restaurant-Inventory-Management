@@ -9,10 +9,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 def home(request):
     return render(request, 'main/home.html')
 
+def logout_request(request):
+    logout(request)
+    return redirect("home")
+
 @login_required
 def inventory(request):
     return render(request, 'main/inventory.html')
 
-def logout_request(request):
-    logout(request)
-    return redirect("home")
+@login_required
+def menu(request):
+    return render(request, 'main/menu.html')
+
+@login_required
+def purchases(request):
+    return render(request, 'main/purchases.html')

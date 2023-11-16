@@ -25,10 +25,14 @@
                     </a>
                 </li>
                 <li>
-                    <i class="fas fa-bars"></i> Menu
+                    <a href="{% url 'menu' %}">
+                        <i class="fas fa-bars"></i> Menu
+                    </a>
                 </li>
                 <li>
-                    <i class="fas fa-shopping-cart"></i> Purchases
+                    <a href="{% url 'purchases' %}">
+                        <i class="fas fa-shopping-cart"></i> Purchases
+                    </a>
                 </li>
                 <li>
                     <a class='logout-button' href="{% url 'logout' %}">
