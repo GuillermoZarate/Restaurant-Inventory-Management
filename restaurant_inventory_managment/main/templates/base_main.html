@@ -1,0 +1,53 @@
+<!-- base.html en la carpeta templates/ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %} 
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <!-- Puedes incluir aquí elementos de navegación comunes -->
+    </header>
+
+    <main>
+        <nav class="sidebar">
+            <ul>
+                <li>
+                    <a href="{% url 'inventory' %}">
+                        <i class="fas fa-box"></i> Inventory
+                    </a>
+                </li>
+                <li>
+                    <i class="fas fa-bars"></i> Menu
+                </li>
+                <li>
+                    <i class="fas fa-shopping-cart"></i> Purchases
+                </li>
+                <li>
+                    <a class='logout-button' href="{% url 'logout' %}">
+                        <i class="fas fa-box"></i> Log Out
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <section class="main-section">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+    <footer>
+        <!-- Puedes incluir aquí elementos de pie de página comunes -->
+    </footer>
+</body>
+</html>
+
+
+
