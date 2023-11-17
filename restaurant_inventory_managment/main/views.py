@@ -7,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_required
 def home(request):
-    return render(request, 'main/home.html')
+    context = {'name': request.user}
+    return render(request, 'main/home.html', context)
 
 def logout_request(request):
     logout(request)

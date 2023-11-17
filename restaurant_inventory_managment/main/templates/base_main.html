@@ -4,21 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django Djitney</title>
     {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'main/css/base.css' %}">
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-
-    <title>Document</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'main/css/logo.ico' %}">
+    <link href="{% static 'main/css/base.css' %}" rel="stylesheet" type="text/css" >
 </head>
 <body>
-    <header>
-        <!-- Puedes incluir aquí elementos de navegación comunes -->
+    <header class="main-header">
+        <div class="header-content">
+            {% if user.username %}
+            <h4 class="header-greet">Welcome {{ user.username }}!</h4>
+            {% endif %}
+        </div>
     </header>
 
     <main>
         <nav class="sidebar">
+            <img
+            src="{% static 'main/css/logo.png' %}"
+            alt="Django Djitney Logo"
+            style="max-width: 100%; height: auto;"
+            />
             <hr><hr>
             <a href="{% url 'inventory' %}" onclick="cambiarColor(this)">
                 <i class="fas fa-box"></i> <span>Inventory</span>
@@ -29,8 +38,7 @@
             <a href="{% url 'purchases' %}" onclick="cambiarColor(this)">
                 <i class="fas fa-shopping-cart"></i> <span>Purchases</span>
             </a>
-            <hr><hr>
-            <a href="{% url 'logout' %}" class="nav-link logout-button" data-url="logout">
+            <a href="{% url 'logout' %}" class="nav-link-logout-button" data-url="logout">
                 <i class="fa-solid fa-right-from-bracket"></i> <span>Log Out</span>
             </a>
         </nav>
