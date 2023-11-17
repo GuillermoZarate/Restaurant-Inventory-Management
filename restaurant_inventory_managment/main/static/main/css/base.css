@@ -1,19 +1,31 @@
-
-
-.header-greet{
-    align-items: end;
-    color: black;
+*{
+    font-family: 'Asap', sans-serif;;
 }
 
-.main-header{
-    margin-left: 15rem;
-    height: 10px;
-    background-color: rgba(244, 91, 105, 1);
+body {
+    background-color: rgba(69, 105, 144, 0.15);
+    padding: 0;
+    margin: 0;
+}
+
+.header-greet{
+    color: black;
+    margin-left: 13rem; /* Ajusta el margen izquierdo según sea necesario */
+    text-align: right; /* Alinea el texto a la derecha */
+    margin-right: 15px;
+}
+
+.main-header {
+    position: fixed;
+    top: 0;
+    width: 100%; /* Ajusta el ancho al 100% para que ocupe toda la pantalla */
+    background-color: white;
+    z-index: 1000; /* Ajusta el índice z según sea necesario */
 }
 
 .main-section{
-	margin-left: 15rem;
-    background-color: rgba(255, 255, 255, 0.6);
+    margin-top: 70px; 
+	margin-left: 13rem;
 }
 
 /* ESTILO DE LA SIDEBAR */
@@ -27,20 +39,18 @@
 	padding: 1rem 1rem;
 	z-index: 1050;
 	transition: width 0.1s ease-in-out;
-	background-color: white;
+	background-color: rgba(244, 91, 105, 1);
 }
 
 /* Estilo para los enlaces dentro de la barra lateral */
 .sidebar a {
-	background-color: rgba(255, 255, 255, 0.6); /* Fondo azul claro */
-    padding: 15px; /* Espaciado interno de la barra lateral */
-    border-radius: 15px; /* Bordes redondeados */
+    color: black;
+    padding: 10px; /* Espaciado interno de la barra lateral */
     display: flex; /* Utiliza el modelo de caja flexible */
     text-decoration: none; /* Quita el subrayado del texto del enlace */
-    color: white; /* Color del texto en blanco */
+    background-color: rgba(255, 255, 255, 0.6); /* Color del texto en blanco */
     margin-bottom: 10px; /* Espaciado entre los enlaces */
     align-items: center; /* Centra verticalmente el contenido del enlace */
-    padding: 10px; /* Añade un poco de espacio alrededor del enlace */
     border-radius: 8px; /* Bordes redondeados para cada enlace */
     transition: background-color 0.3s; /* Transición suave del color de fondo */
 }
@@ -53,24 +63,18 @@
 
 /* Estilo para el enlace cuando es pulsado */
 .sidebar a:active{
-    background-color: #FFA500; /* Color naranja cuando el enlace es pulsado */
-}
-
-/* Estilo para los enlaces dentro de la barra lateral */
-.sidebar a {
-    display: block; /* Hace que los enlaces ocupen toda la anchura disponible */
-    text-decoration: none; /* Quita el subrayado del texto del enlace */
-    color: rgba(255, 255, 255, 0.6); /* Color del texto en blanco */
-    margin-bottom: 10px; /* Espaciado entre los enlaces */
+    background-color: rgba(69, 105, 144, 0.15);
 }
 
 /* Estilo para el botón de cierre de sesión */
 .sidebar .logout-button {
     background-color: #87CEFA; /* Color de fondo para resaltar el botón de cierre de sesión */
-    padding: 10px; /* Espaciado interno del botón de cierre de sesión */
     color: rgba(255, 255, 255, 0.6); /* Color del texto en blanco */
-    position: absolute;
+    padding: 10px; /* Ajustar el espaciado interno según sea necesario */
+    text-align: center; /* Centrar el texto horizontalmente */
+    position: absolute; /* Cambiar a posición absoluta para ajustar al fondo de la barra lateral */
     bottom: 0;
+    width: 73%;
 }
 
 /* Estilo para la barra lateral en pantallas pequeñas (hasta 768px) */
@@ -92,5 +96,15 @@
         flex-direction: column;
         align-items: center;
         margin-bottom: 5px; /* Ajusta el espaciado entre los enlaces */
+    }
+
+    .sidebar .logout-button {
+        background-color: #87CEFA; /* Color de fondo para resaltar el botón de cierre de sesión */
+        color: rgba(255, 255, 255, 0.6); /* Color del texto en blanco */
+        padding: 10px; /* Ajustar el espaciado interno según sea necesario */
+        text-align: center; /* Centrar el texto horizontalmente */
+        position: absolute; /* Cambiar a posición absoluta para ajustar al fondo de la barra lateral */
+        bottom: 0;
+        width: 20%;
     }
 }
