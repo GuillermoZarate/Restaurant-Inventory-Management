@@ -26,6 +26,10 @@ body {
 .main-section{
     margin-top: 70px; 
 	margin-left: 13rem;
+    margin-right: 10px;
+    background-color: #FFFFFF;
+    border: 2px groove;
+    border-radius: 12px;
 }
 
 /* ESTILO DE LA SIDEBAR */
@@ -77,14 +81,28 @@ body {
     width: 73%;
 }
 
+/* Estilo para el encabezado de la tabla */
+.table thead {
+    font-size: 18px;
+    background-color: rgba(244, 91, 105, 1);
+    color: white;
+    line-height: 1.4; /* Cambia este color según tus preferencias */
+}
+
+/* Estilo para el fondo de las filas en el cuerpo de la tabla */
+.table tbody {
+    background-color: #ecf0f1; /* Cambia este color según tus preferencias */
+}
+
 /* Estilo para la barra lateral en pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
     .main-section{
         margin-left: 7rem;
+        margin-right: 10px;
     }
 
     .sidebar {
-		width: 2rem;
+		width: 5rem;
     }
 
 	.sidebar a span {

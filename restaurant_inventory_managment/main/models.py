@@ -7,8 +7,7 @@ class Ingredient(models.Model):
     price_unit = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.name} - {self.quantity} units"
-    
+        return f"{self.name} - {self.quantity} units" 
 
 class MenuItem(models.Model):
     menu_item = models.CharField(max_length=100, unique=True)
