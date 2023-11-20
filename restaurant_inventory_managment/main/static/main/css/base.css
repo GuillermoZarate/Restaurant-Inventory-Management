@@ -24,8 +24,8 @@ body {
 }
 
 .main-section{
-    margin-top: 70px; 
-	margin-left: 13rem;
+    margin-top: 45px; 
+	margin-left: 11rem;
     margin-right: 10px;
     background-color: #FFFFFF;
     border: 2px groove;
@@ -97,7 +97,7 @@ body {
 /* Estilo para la barra lateral en pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
     .main-section{
-        margin-left: 7rem;
+        margin-left: 6rem;
         margin-right: 10px;
     }
 
