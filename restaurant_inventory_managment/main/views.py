@@ -34,4 +34,6 @@ class IngredientListView(LoginRequiredMixin, SingleTableView):
     template_name = 'main/inventory.html'
     paginate_by = 3  
 
-    
+    def get_queryset(self):
+        # Order the queryset by name
+        return Ingredient.objects.all().order_by('name')
