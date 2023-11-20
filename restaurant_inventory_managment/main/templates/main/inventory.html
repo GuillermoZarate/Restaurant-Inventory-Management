@@ -4,6 +4,15 @@
 {% block content %}
 <div>
     <h1>BIENVENIDO AL INVENTORY</h1>
+    <hr>
+
+    <h2>Creación de Ingredientes</h2>
+    <form method="post" action="{% url 'inventory' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar Ingrediente</button>
+    </form>
+    <hr>
 
     <h2>Lista de Ingredientes</h2>
     {% render_table table %}

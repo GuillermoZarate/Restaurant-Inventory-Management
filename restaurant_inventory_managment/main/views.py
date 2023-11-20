@@ -8,6 +8,7 @@ from django.utils.decorators import method_decorator
 
 from .models import Ingredient
 from .tables import IngredientTable
+from .forms import IngredientForm 
 from django_tables2 import SingleTableView
 
 @login_required
@@ -32,8 +33,24 @@ class IngredientListView(LoginRequiredMixin, SingleTableView):
     model = Ingredient
     table_class = IngredientTable
     template_name = 'main/inventory.html'
-    paginate_by = 3  
+    paginate_by = 10
 
     def get_queryset(self):
-        # Order the queryset by name
         return Ingredient.objects.all().order_by('name')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = IngredientForm()  # Agrega el formulario al contexto
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return self.get(request, *args, **kwargs)  # Redirige a la vista de lista (get request)
+        else:
+            # Si el formulario no es válido, vuelva a renderizar la página con el formulario y la tabla
+            context = self.get_context_data()
+            context['form'] = form
+            return self.render_to_response(context)
+    

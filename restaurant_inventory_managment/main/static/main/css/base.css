@@ -30,6 +30,7 @@ body {
     background-color: #FFFFFF;
     border: 2px groove;
     border-radius: 12px;
+    padding: 10px;
 }
 
 /* ESTILO DE LA SIDEBAR */
@@ -78,7 +79,7 @@ body {
     text-align: center; /* Centrar el texto horizontalmente */
     position: absolute; /* Cambiar a posición absoluta para ajustar al fondo de la barra lateral */
     bottom: 0;
-    width: 73%;
+    width: 80%;
 }
 
 /* Estilo para el encabezado de la tabla */
@@ -123,6 +124,6 @@ body {
         text-align: center; /* Centrar el texto horizontalmente */
         position: absolute; /* Cambiar a posición absoluta para ajustar al fondo de la barra lateral */
         bottom: 0;
-        width: 100%;
+        width: 60%;
     }
 }
