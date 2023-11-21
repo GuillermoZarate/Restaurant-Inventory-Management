@@ -27,12 +27,54 @@ body {
     margin-top: 45px; 
 	margin-left: 11rem;
     margin-right: 10px;
-    background-color: #FFFFFF;
-    border: 2px groove;
-    border-radius: 12px;
-    padding: 10px;
+    display: flex; /* Añadido para aplicar flexbox */
+    justify-content: space-between; /* Alinea los divs a los extremos */
 }
 
+.main-section div{
+    flex: 1; /* Añadido para que ambos divs ocupen el espacio disponible */
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.create-section {
+    max-width: 400px; /* Ajusta el ancho máximo según tus necesidades */
+    height: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table-section {
+    flex-grow: 2; /* Hace que este div ocupe más espacio que create-section */
+    margin-left: 5px;
+}
+
+@media (max-width: 1116px) {
+    .main-section {
+        flex-direction: column; /* Cambia la dirección del flexbox a columna */
+    }
+
+    .main-section div {
+        flex: none; /* Quita la propiedad flex: 1; en pantallas medianas y pequeñas */
+    }
+
+    .create-section{
+        max-width: none;
+    }
+}
+
+.update-view, .delete-view{
+    margin-top: 45px; 
+	margin-left: 11rem;
+    margin-right: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
 /* ESTILO DE LA SIDEBAR */
 /* Sidebar fina 'fixed' a la izquierda */
 .sidebar {
@@ -88,6 +130,7 @@ body {
     background-color: rgba(244, 91, 105, 1);
     color: white;
     line-height: 1.4; /* Cambia este color según tus preferencias */
+    text-decoration: none;
 }
 
 /* Estilo para el fondo de las filas en el cuerpo de la tabla */
@@ -95,9 +138,70 @@ body {
     background-color: #ecf0f1; /* Cambia este color según tus preferencias */
 }
 
+
+.delete-button{
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    display: flex;
+    background: red;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    justify-content: center;
+    align-items: baseline;
+}
+
+.delete-button span{
+    margin-left: 5px;
+}
+
+.edit-button{
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    display: flex;
+    background: green;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    justify-content: center;
+    align-items: baseline;
+}
+
+.edit-button span{
+    margin-left: 5px;
+}
+
+/* Create form style*/
+
+.create-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.create-form label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.create-form input, .create-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+
+.save-ingredient{
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+}
+
 /* Estilo para la barra lateral en pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
-    .main-section{
+    .main-section, .update-view, .delete-view{
         margin-left: 6rem;
         margin-right: 10px;
     }

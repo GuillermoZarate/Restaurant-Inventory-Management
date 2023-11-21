@@ -9,7 +9,10 @@ from django.utils.decorators import method_decorator
 from .models import Ingredient
 from .tables import IngredientTable
 from .forms import IngredientForm 
-from django_tables2 import SingleTableView
+from django_tables2 import SingleTableView, LazyPaginator
+from django.contrib import messages # Manejo de errores y envio de mensajes
+
+from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 
 @login_required
 def home(request):
@@ -34,6 +37,7 @@ class IngredientListView(LoginRequiredMixin, SingleTableView):
     table_class = IngredientTable
     template_name = 'main/inventory.html'
     paginate_by = 10
+    pagination_class = LazyPaginator
 
     def get_queryset(self):
         return Ingredient.objects.all().order_by('name')
@@ -47,10 +51,20 @@ class IngredientListView(LoginRequiredMixin, SingleTableView):
         form = IngredientForm(request.POST)
         if form.is_valid():
             form.save()
-            return self.get(request, *args, **kwargs)  # Redirige a la vista de lista (get request)
+            messages.success(request, 'Ingrediente guardado exitosamente.')
         else:
-            # Si el formulario no es válido, vuelva a renderizar la página con el formulario y la tabla
-            context = self.get_context_data()
-            context['form'] = form
-            return self.render_to_response(context)
-    
+            messages.error(request, 'Hubo un error al guardar el ingrediente. Por favor, corrige los errores.')
+        
+        return self.get(request, *args, **kwargs)  # Redirige a la vista de lista (get request)
+
+@method_decorator(login_required, name='dispatch')
+class DeleteInventoryItemView(DeleteView):
+    model = Ingredient
+    success_url = '/inventory'  # Redirect to "/lines" after successful deletion
+    template_name = 'main/delete_ingredient.html'
+@method_decorator(login_required, name='dispatch')
+class UpdateInventoryItemView(UpdateView):
+    model = Ingredient
+    form_class = IngredientForm
+    success_url = '/inventory' 
+    template_name = 'main/update_ingredient.html'

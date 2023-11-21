@@ -1,0 +1,14 @@
+{% extends 'base_main.html' %} 
+{% load static %} 
+
+{% block content %}
+<div class="update-view">
+    <h2>Update Ingredient</h2>
+    <form method="post"s>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update" />
+    </form> 
+</div>
+
+{% endblock %}

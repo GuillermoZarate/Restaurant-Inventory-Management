@@ -9,10 +9,12 @@ class IngredientTable(tables.Table):
         model = Ingredient
         template_name = 'django_tables2/bootstrap4.html'
         attrs = {'class': 'table table-bordered table-hover ', 'data-searching': 'true',}
-
-    def render_edit(self, record):
-        return format_html('<button>Editar</button>')
+        exclude = ('id',)
 
     def render_delete(self, record):
-        return format_html('<button>Eliminar</button>')
+        return format_html('<a class="delete-button" href="{}"><i class="fa-solid fa-trash"></i><span>Delete</span></a>', reverse('delete_ingredient', args=[record.id]))
+
+
+    def render_edit(self, record):
+        return format_html('<a class="edit-button" href="{}"><i class="fa-solid fa-pen-to-square"></i><span>Edit</span></a>', reverse('update_ingredient', args=[record.id]))
 

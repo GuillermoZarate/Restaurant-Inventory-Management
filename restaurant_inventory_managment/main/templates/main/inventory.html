@@ -2,21 +2,27 @@
 {% load render_table from django_tables2 %}
 
 {% block content %}
-<div>
-    <h1>BIENVENIDO AL INVENTORY</h1>
-    <hr>
+<div class="main-section">
+    <div class="create-section">
+        <h2 style="margin-bottom: 0;margin-top: 10px;">Add a new ingredient</h2>
+        <hr style="width: 100%;">
+        <form method="post" class="create-form" action="{% url 'inventory' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="save-ingredient" type="submit"><i class="fa-solid fa-warehouse"></i> Guardar Ingrediente</button>
+        </form>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 
-    <h2>Creación de Ingredientes</h2>
-    <form method="post" action="{% url 'inventory' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar Ingrediente</button>
-    </form>
-    <hr>
-
-    <h2>Lista de Ingredientes</h2>
-    {% render_table table %}
-
+    <div class="table-section">
+        {% render_table table %}
+    </div>
 </div>
 
 {% endblock %}

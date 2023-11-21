@@ -1,8 +1,15 @@
 from django.db import models
+from django.core.validators import RegexValidator
 
 # Create your models here.
 class Ingredient(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name_validator = RegexValidator(
+        regex=r'^[a-zA-Z ]+$',
+        message='El nombre solo puede contener letras y espacios.',
+        code='invalid_name'
+    )
+
+    name = models.CharField(max_length=100, unique=True, validators=[name_validator])
     quantity = models.PositiveIntegerField()
     price_unit = models.DecimalField(max_digits=10, decimal_places=2)
 
