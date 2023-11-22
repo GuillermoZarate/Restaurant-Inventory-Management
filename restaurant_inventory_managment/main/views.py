@@ -6,30 +6,32 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 
-from .models import Ingredient
+from .models import Ingredient, MenuItem
 from .tables import IngredientTable
-from .forms import IngredientForm 
+from .forms import IngredientForm, MenuForm 
 from django_tables2 import SingleTableView, LazyPaginator
 from django.contrib import messages # Manejo de errores y envio de mensajes
 
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 
-@login_required
-def home(request):
-    context = {'name': request.user}
-    return render(request, 'main/home.html', context)
 
 def logout_request(request):
     logout(request)
     return redirect("home")
 
 @login_required
-def menu(request):
-    return render(request, 'main/menu.html')
-
-@login_required
 def purchases(request):
     return render(request, 'main/purchases.html')
+
+@method_decorator(login_required, name='dispatch')
+class MenuListView(LoginRequiredMixin, ListView):
+    model = MenuItem
+    template_name = 'main/menu.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) # Agrega el formulario al contexto si es necesario
+        context['menu'] = MenuItem.objects.all().order_by('menu_item')
+        return context
 
 @method_decorator(login_required, name='dispatch')
 class IngredientListView(LoginRequiredMixin, SingleTableView):

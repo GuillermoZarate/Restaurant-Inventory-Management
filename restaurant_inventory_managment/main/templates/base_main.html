@@ -9,9 +9,10 @@
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'main/css/logo.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'main/assets/logo.ico' %}">
     <!-- En tu plantilla base_main.html -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="{% static 'main/css/styles.css' %}" rel="stylesheet" type="text/css" >
     <link href="{% static 'main/css/base.css' %}" rel="stylesheet" type="text/css" >
 </head>
 <body>
@@ -26,7 +27,7 @@
     <main>
         <nav class="sidebar">
             <img
-            src="{% static 'main/css/logo.png' %}"
+            src="{% static 'main/assets/logo.png' %}"
             alt="Django Djitney Logo"
             style="max-width: 100%; height: auto;"
             />
@@ -34,11 +35,11 @@
             <a href="{% url 'menu' %}" onclick="cambiarColor(this)">
                 <i class="fa-solid fa-utensils"></i> <span>Menu</span>
             </a>
-            <a href="{% url 'inventory' %}" onclick="cambiarColor(this)">
-                <i class="fas fa-box"></i> <span>Inventory</span>
-            </a>
             <a href="{% url 'purchases' %}" onclick="cambiarColor(this)">
                 <i class="fas fa-shopping-cart"></i> <span>Purchases</span>
+            </a>
+            <a href="{% url 'inventory' %}" onclick="cambiarColor(this)">
+                <i class="fas fa-box"></i> <span>Inventory</span>
             </a>
             <a href="{% url 'logout' %}" class="logout-button"s>
                 <i class="fa-solid fa-right-from-bracket"></i> <span>Log Out</span>

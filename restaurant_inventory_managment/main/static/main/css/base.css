@@ -31,6 +31,16 @@ body {
     justify-content: space-between; /* Alinea los divs a los extremos */
 }
 
+.main-menu{
+    margin-top: 45px; 
+	margin-left: 11rem;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    background-color: white;
+}
+
 .main-section div{
     flex: 1; /* Añadido para que ambos divs ocupen el espacio disponible */
     background-color: white;
@@ -201,7 +211,7 @@ body {
 
 /* Estilo para la barra lateral en pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
-    .main-section, .update-view, .delete-view{
+    .main-section, .update-view, .delete-view, .main-menu{
         margin-left: 6rem;
         margin-right: 10px;
     }
