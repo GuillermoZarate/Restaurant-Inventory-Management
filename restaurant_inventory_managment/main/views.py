@@ -1,5 +1,5 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,8 @@ from django.contrib import messages # Manejo de errores y envio de mensajes
 
 from django.views.generic import TemplateView, ListView, CreateView, DeleteView, UpdateView
 
+from .cart import Cart
+from django.http import JsonResponse
 
 def logout_request(request):
     logout(request)
@@ -32,6 +34,28 @@ class MenuListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs) # Agrega el formulario al contexto si es necesario
         context['menu'] = MenuItem.objects.all().order_by('menu_item')
         return context
+
+def cart_add(request):
+    # Get the cart
+	cart = Cart(request)
+	# test for POST
+	if request.POST.get('action') == 'post':
+		# Get stuff
+		product_id = int(request.POST.get('product_id'))
+		
+		# lookup product in DB
+		product = get_object_or_404(MenuItem, id=product_id)
+		
+		# Save to session
+		cart.add(product=product)
+
+		# Get Cart Quantity
+		cart_quantity = cart.__len__()
+
+		# Return resonse
+		# response = JsonResponse({'Product Name: ': product.name})
+		response = JsonResponse({'qty': cart_quantity})
+		return response
 
 @method_decorator(login_required, name='dispatch')
 class IngredientListView(LoginRequiredMixin, SingleTableView):

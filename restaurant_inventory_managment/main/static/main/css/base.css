@@ -8,11 +8,17 @@ body {
     margin: 0;
 }
 
+.header-content{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+}
+
 .header-greet{
     color: black;
-    margin-left: 13rem; /* Ajusta el margen izquierdo según sea necesario */
-    text-align: right; /* Alinea el texto a la derecha */
     margin-right: 15px;
+    margin-left: 20px;
+    margin-bottom: 5px;
 }
 
 .main-header {
@@ -21,6 +27,7 @@ body {
     width: 100%; /* Ajusta el ancho al 100% para que ocupe toda la pantalla */
     background-color: white;
     z-index: 1000; /* Ajusta el índice z según sea necesario */
+    padding: 2px;
 }
 
 .main-section{
