@@ -1,3 +1,4 @@
+{% load static %} 
 <!-- base.html en la carpeta templates/ -->
 <!DOCTYPE html>
 <html lang="en">
@@ -5,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Django Djitney</title>
-    {% load static %} 
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
@@ -31,11 +31,11 @@
             style="max-width: 100%; height: auto;"
             />
             <hr><hr>
-            <a href="{% url 'inventory' %}" onclick="cambiarColor(this)">
-                <i class="fas fa-box"></i> <span>Inventory</span>
-            </a>
             <a href="{% url 'menu' %}" onclick="cambiarColor(this)">
                 <i class="fa-solid fa-utensils"></i> <span>Menu</span>
+            </a>
+            <a href="{% url 'inventory' %}" onclick="cambiarColor(this)">
+                <i class="fas fa-box"></i> <span>Inventory</span>
             </a>
             <a href="{% url 'purchases' %}" onclick="cambiarColor(this)">
                 <i class="fas fa-shopping-cart"></i> <span>Purchases</span>
