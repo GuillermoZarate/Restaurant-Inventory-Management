@@ -11,4 +11,5 @@ urlpatterns = [
     path('inventory/delete/<pk>', DeleteInventoryItemView.as_view(), name='delete_ingredient'),
     path('inventory/update/<pk>', UpdateInventoryItemView.as_view(), name='update_ingredient'),
     path('purchases/', views.purchases, name="purchases"),
+    path('card/', views.confirm_selection, name='card')
 ]

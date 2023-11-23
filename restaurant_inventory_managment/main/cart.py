@@ -1,30 +1,20 @@
-
 class Cart():
-	def __init__(self, request):
-		self.session = request.session
+    def __init__(self, request):
+        self.session = request.session
+        self.cart = self.session.get('cart', {})
 
-		# Get the current session key if it exists
-		cart = self.session.get('session_key')
+    def add(self, product):
+        product_id = str(product.id)
 
-		# If the user is new, no session key!  Create one!
-		if 'session_key' not in request.session:
-			cart = self.session['session_key'] = {}
+        if product_id in self.cart:
+            self.cart[product_id]['quantity'] += 1
+        else:
+            self.cart[product_id] = {'quantity': 1, 'price': str(product.price_entry)}
 
+        self.session['cart'] = self.cart
+        self.session.modified = True
 
-		# Make sure cart is available on all pages of site
-		self.cart = cart
-
-	def add(self, product):
-		product_id = str(product.id)
-
-		# Logic
-		if product_id in self.cart:
-			pass
-		else:
-			self.cart[product_id] = {'price': str(product.price_entry)}
-
-		self.session.modified = True
-
-	def __len__(self):
-		return len(self.cart)
-
+    def __len__(self):
+        # Sumar las cantidades de los elementos en el carrito y los elementos seleccionados
+        cart_quantity = sum(item['quantity'] for item in self.cart.values())
+        return cart_quantity

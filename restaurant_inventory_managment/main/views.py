@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 
-from .models import Ingredient, MenuItem
+from .models import Ingredient, MenuItem, RecipeRequirement
 from .tables import IngredientTable
 from .forms import IngredientForm, MenuForm 
 from django_tables2 import SingleTableView, LazyPaginator
@@ -34,29 +34,7 @@ class MenuListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs) # Agrega el formulario al contexto si es necesario
         context['menu'] = MenuItem.objects.all().order_by('menu_item')
         return context
-
-def cart_add(request):
-    # Get the cart
-	cart = Cart(request)
-	# test for POST
-	if request.POST.get('action') == 'post':
-		# Get stuff
-		product_id = int(request.POST.get('product_id'))
-		
-		# lookup product in DB
-		product = get_object_or_404(MenuItem, id=product_id)
-		
-		# Save to session
-		cart.add(product=product)
-
-		# Get Cart Quantity
-		cart_quantity = cart.__len__()
-
-		# Return resonse
-		# response = JsonResponse({'Product Name: ': product.name})
-		response = JsonResponse({'qty': cart_quantity})
-		return response
-
+    
 @method_decorator(login_required, name='dispatch')
 class IngredientListView(LoginRequiredMixin, SingleTableView):
     model = Ingredient
@@ -94,3 +72,75 @@ class UpdateInventoryItemView(UpdateView):
     form_class = IngredientForm
     success_url = '/inventory' 
     template_name = 'main/update_ingredient.html'
+
+
+def cart_add(request):
+    cart = Cart(request)
+
+    if request.POST.get('action') == 'post':
+        product_id = int(request.POST.get('product_id'))
+        product = get_object_or_404(MenuItem, id=product_id)
+
+        cart.add(product=product)
+        cart_quantity = cart.__len__()
+
+        response_data = {
+            'qty': cart_quantity,
+            'product_id': product_id  # Agregar el product_id a la respuesta
+        }
+
+        return JsonResponse(response_data)
+
+
+# Create context processor so our cart can work on all pages of the site
+def cart(request):
+	# Return the default data from our Cart
+	return {'cart': Cart(request)}
+
+def confirm_selection(request):
+    cart = Cart(request)
+
+    # Obtener la información de los elementos seleccionados
+    selected_items = cart.cart
+    
+    final_dict = {}
+
+    # Itera sobre los ítems seleccionados
+    for menu_item_id, details in selected_items.items():
+        # Obtén el objeto MenuItem
+        menu_item = MenuItem.objects.get(pk=int(menu_item_id))
+
+        # Obtén los requisitos de receta asociados a ese ítem de menú
+        recipe_requirements = RecipeRequirement.objects.filter(menu_item=menu_item)
+
+        # Crea un diccionario para almacenar la información del ítem seleccionado
+        item_info = {
+            'menu_item_name': menu_item.menu_item,
+            'menu_item_price': details['price'],
+            'ingredients': []
+        }
+
+        # Itera sobre los requisitos de receta y obtén la información del ingrediente
+        for requirement in recipe_requirements:
+            ingredient = requirement.ingredient
+            quantity_required = requirement.quantity_required
+
+            # Calcula el precio total del ingrediente (precio unitario * cantidad requerida)
+            ingredient_price = ingredient.price_unit * quantity_required
+
+            # Agrega la información del ingrediente al diccionario
+            item_info['ingredients'].append({
+                'ingredient_name': ingredient.name,
+                'ingredient_quantity': quantity_required,
+                'ingredient_price': ingredient_price
+            })
+
+        # Agrega la información del ítem seleccionado al diccionario final
+        final_dict[menu_item_id] = item_info
+
+    # Limpiar el carrito después de confirmar la selección
+    cart.cart = {}
+    cart.session['cart'] = {}
+    cart.session.modified = True
+
+    return render(request, 'main/confirm_selection.html', {'selected_items': final_dict})
