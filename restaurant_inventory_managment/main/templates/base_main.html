@@ -15,11 +15,14 @@
     <link href="{% static 'main/css/styles.css' %}" rel="stylesheet" type="text/css" >
     <link href="{% static 'main/css/base.css' %}" rel="stylesheet" type="text/css" >
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
 </head>
 <body>
     <header class="main-header">
         <div class="header-content">
-            <a href="{% url 'card' %}" class="btn btn-outline-dark header-card"><i class="bi-cart-fill me-1"></i>Cart<span class="badge bg-dark text-white ms-1 rounded-pill"" id="cart_quantity">{{ cart|length }}</span></a>            
+            <a href="{% url 'card' %}" class="btn btn-outline-dark header-card"><i class="fa-solid fa-cart-shopping"></i><span class="badge bg-dark text-white ms-1 rounded-pill"" id="cart_quantity">{{ cart|length }}</span></a>            
             {% if user.username %}
             <h4 class="header-greet"> Welcome {{ user.username }}!</h4>
             {% endif %}
@@ -38,7 +41,7 @@
                 <i class="fa-solid fa-utensils"></i> <span>Menu</span>
             </a>
             <a href="{% url 'purchases' %}" onclick="cambiarColor(this)">
-                <i class="fas fa-shopping-cart"></i> <span>Purchases</span>
+                <i class="fa-solid fa-chart-simple"></i> <span>Purchases</span>
             </a>
             <a href="{% url 'inventory' %}" onclick="cambiarColor(this)">
                 <i class="fas fa-box"></i> <span>Inventory</span>

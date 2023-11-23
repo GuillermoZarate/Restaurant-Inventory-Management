@@ -6,9 +6,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 
-from .models import Ingredient, MenuItem, RecipeRequirement
-from .tables import IngredientTable
-from .forms import IngredientForm, MenuForm 
+from .models import Ingredient, MenuItem, RecipeRequirement, Purchase
+from django.utils import timezone
+from .tables import IngredientTable, PurchaseTable
+from .forms import IngredientForm, PurchaseForm 
 from django_tables2 import SingleTableView, LazyPaginator
 from django.contrib import messages # Manejo de errores y envio de mensajes
 
@@ -17,13 +18,29 @@ from django.views.generic import TemplateView, ListView, CreateView, DeleteView,
 from .cart import Cart
 from django.http import JsonResponse
 
+import json
+
 def logout_request(request):
     logout(request)
     return redirect("home")
 
-@login_required
-def purchases(request):
-    return render(request, 'main/purchases.html')
+@method_decorator(login_required, name='dispatch')
+class PurchaseListView(LoginRequiredMixin, SingleTableView):
+    model = Purchase
+    table_class = PurchaseTable
+    template_name = 'main/purchases.html'
+    paginate_by = 10
+    pagination_class = LazyPaginator
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Obtener datos de compras para Highcharts
+        purchases = Purchase.objects.all().order_by('-purchase_date')
+        chart_data = list(purchases.values('menu_item__menu_item', 'quantity_purchased'))
+        # Agregar datos a contexto en formato JSON
+        context['chart_data_json'] = json.dumps(chart_data)
+        context['form'] = PurchaseForm  # Agrega el formulario al contexto
+        return context
 
 @method_decorator(login_required, name='dispatch')
 class MenuListView(LoginRequiredMixin, ListView):
@@ -62,12 +79,13 @@ class IngredientListView(LoginRequiredMixin, SingleTableView):
         return self.get(request, *args, **kwargs)  # Redirige a la vista de lista (get request)
 
 @method_decorator(login_required, name='dispatch')
-class DeleteInventoryItemView(DeleteView):
+class DeleteInventoryItemView(LoginRequiredMixin, DeleteView):
     model = Ingredient
     success_url = '/inventory'  # Redirect to "/lines" after successful deletion
     template_name = 'main/delete_ingredient.html'
+
 @method_decorator(login_required, name='dispatch')
-class UpdateInventoryItemView(UpdateView):
+class UpdateInventoryItemView(LoginRequiredMixin, UpdateView):
     model = Ingredient
     form_class = IngredientForm
     success_url = '/inventory' 
@@ -117,6 +135,7 @@ def confirm_selection(request):
         item_info = {
             'menu_item_name': menu_item.menu_item,
             'menu_item_price': details['price'],
+            'quantity': details['quantity'],
             'ingredients': []
         }
 
@@ -130,6 +149,7 @@ def confirm_selection(request):
 
             # Agrega la información del ingrediente al diccionario
             item_info['ingredients'].append({
+                'ingredient_id': ingredient.id,
                 'ingredient_name': ingredient.name,
                 'ingredient_quantity': quantity_required,
                 'ingredient_price': ingredient_price
@@ -138,9 +158,38 @@ def confirm_selection(request):
         # Agrega la información del ítem seleccionado al diccionario final
         final_dict[menu_item_id] = item_info
 
-    # Limpiar el carrito después de confirmar la selección
-    cart.cart = {}
-    cart.session['cart'] = {}
-    cart.session.modified = True
-
     return render(request, 'main/confirm_selection.html', {'selected_items': final_dict})
+
+@login_required
+def delete_selected_items(request):
+    if request.method == 'POST':
+        cart = Cart(request)
+        selected_items = cart.cart
+
+        print("Selected Items Before Deletion:", selected_items)
+
+        for menu_item_id, details in selected_items.items():
+            menu_item = get_object_or_404(MenuItem, pk=menu_item_id)
+            recipe_requirements = RecipeRequirement.objects.filter(menu_item=menu_item)
+            purchase = Purchase.objects.create(
+                menu_item=menu_item,
+                quantity_purchased=details['quantity'],
+                purchase_date=timezone.now()
+            )
+
+            for requirement in recipe_requirements:
+                ingredient = requirement.ingredient
+                quantity_required = requirement.quantity_required * details['quantity']
+
+                # Update the quantity in the database
+                ingredient.quantity -= quantity_required
+                ingredient.save()
+
+        # Clear the cart after updating the quantities
+        cart.cart = {}
+        cart.session['cart'] = {}
+        cart.session.modified = True
+        print("Selected Items After Deletion:", cart.cart)
+        return redirect('menu')
+
+    return JsonResponse({'success': False})

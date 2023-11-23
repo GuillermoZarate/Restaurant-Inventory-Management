@@ -3,9 +3,27 @@
 
 {% block content %}
 <div class="main-menu">
-    <h1>Confirm Selection</h1>
+    <h1>Selected Items:</h1>
     <hr>
-    {{ selected_items }}
+    {% if selected_items %}
+        <ul>
+            {% for product_id, item_info in selected_items.items %}
+                <li>
+                    <strong>Menu name:</strong> {{ item_info.menu_item_name }}<br>
+                    <strong>Quantity:</strong> {{ item_info.quantity }}<br>
+                    <strong>Price/Unit:</strong> ${{ item_info.menu_item_price }}<br>
+                </li>
+            {% endfor %}
+        </ul>
 
+        <form method="post" action="{% url 'delete_card' %}">
+            {% csrf_token %}
+            <input type="submit" value="Confirm your purchase">
+        </form>        
+
+    {% else %}
+        <h2>NO ITEMS SELECTED</h2>
+    {% endif %}
+    
 </div>
 {% endblock %}

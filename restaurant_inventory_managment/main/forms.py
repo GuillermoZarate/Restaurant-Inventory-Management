@@ -1,12 +1,12 @@
 from django import forms
-from .models import Ingredient, MenuItem
+from .models import Ingredient, MenuItem, Purchase
 
 class IngredientForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = ['name', 'quantity', 'price_unit']
 
-class MenuForm(forms.ModelForm):
+class PurchaseForm(forms.ModelForm):
     class Meta:
-        model = MenuItem
+        model = Purchase
         fields = '__all__'
